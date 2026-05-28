@@ -8,5 +8,14 @@
 import UIKit
 
 class BibleNavigatorViewController: UIViewController {
-    
+    override func loadView() {
+        view = WelcomeView()
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // load the API data?
+        
+        // set a timer, then invoke the next view controller?
+    }
 }
