@@ -62,7 +62,7 @@ class WelcomeView: UIView {
         welcomeLabel.text = "Welcome to Bible Navigator"
         welcomeLabel.textColor = .white
         welcomeLabel.textAlignment = .center
-        
+        welcomeLabel.numberOfLines = 0 // this lets it take as many lines as needed when it needs to wrap
         
         // New York font
         welcomeLabel.font = UIFontDescriptor.preferredFontDescriptor(
@@ -80,7 +80,12 @@ class WelcomeView: UIView {
         // apply constraints to center it relative to the parent view
         NSLayoutConstraint.activate([
             welcomeLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            welcomeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            welcomeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            
+            // Prevent from bleeding out the screen
+            welcomeLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.leadingAnchor, constant: 20),
+            welcomeLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -20)
         ])
     }
+    
 }

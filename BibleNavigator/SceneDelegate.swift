@@ -24,6 +24,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = WelcomeViewController()
         window?.makeKeyAndVisible()
+        
+        // Switch out to the main app view after the welcome screen
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            if let welcomeVC = self.window?.rootViewController as? WelcomeViewController {
+                NSLog("welcomevc animate out")
+                welcomeVC.animateOut()
+            }
+            self.window?.rootViewController = BibleNavigatorViewController()
+            self.window?.makeKeyAndVisible()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
