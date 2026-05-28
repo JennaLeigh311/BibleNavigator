@@ -19,6 +19,13 @@ class BookViewController: UIViewController {
         
         view.backgroundColor = .blue
         
+        do {
+            try chooseChapter()
+            print("Success!")
+        } catch {
+            print("Failed: \(error.localizedDescription)")
+        }
+        
     }
     
     // Source - https://codemia.io/knowledge-hub/path/make_a_simple_fade_in_animation_in_swift
@@ -35,5 +42,14 @@ class BookViewController: UIViewController {
                 }
             )
         }
+    }
+    
+    func chooseChapter() throws {
+        guard let navigationViewController = view.window?.rootViewController as? UINavigationController else {
+            throw NSError(domain: "AppError", code: 1, userInfo: [NSLocalizedDescriptionKey: "No navigation controller found"])
+        }
+        
+        navigationViewController.pushViewController(ChapterViewController(), animated: true)
+        
     }
 }

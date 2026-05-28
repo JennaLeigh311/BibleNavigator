@@ -32,10 +32,10 @@ class WelcomeViewController: UIViewController {
 
     func switchToMainApp() async {
         await animateOut()
-
+        
+        // TODO: disable navigation bar
         let navigationController = UINavigationController(rootViewController: BookViewController())
         view.window?.rootViewController = navigationController
-        view.window?.makeKeyAndVisible()
     }
     
     func animateOut() async {
