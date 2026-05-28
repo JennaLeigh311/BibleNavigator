@@ -15,7 +15,6 @@ class WelcomeView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
 
         setGradientBackground(colorTop: UIColor(
             red: 0/255,
@@ -36,11 +35,6 @@ class WelcomeView: UIView {
         fatalError("did not instanstiate coder")
     }
     
-    func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-
-    }
-
-    
     // Source - https://stackoverflow.com/a/50040529
     // Posted by gmoraleda
     // Retrieved 2026-05-28, License - CC BY-SA 3.0
@@ -53,11 +47,13 @@ class WelcomeView: UIView {
         self.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    // The gradient needs to be able to change orientation with the screen changing
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = self.bounds
     }
     
+    // Add welcome label
     func setupLabel() {
         let welcomeLabel = UILabel()
         welcomeLabel.text = "Welcome to Bible Navigator"

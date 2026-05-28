@@ -15,7 +15,10 @@ class WelcomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // call the loading of the API data here
+        
+    
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             Task {
                 await self.switchToMainApp()
@@ -29,20 +32,13 @@ class WelcomeViewController: UIViewController {
 
     func switchToMainApp() async {
         await animateOut()
-        // So I learned that view.window will give us the window that the current view/viewcontroller belongs to
-        // so we can switch it within this view controller rather than in the scene
-        guard let windowScene = view.window?.windowScene,
-              // scene delegate stores the reference to the window
-              let sceneDelegate = windowScene.delegate as? SceneDelegate,
-              let window = sceneDelegate.window else {
-            return
-        }
 
-        window.rootViewController = BibleNavigatorViewController()
-        window.makeKeyAndVisible()
+        let navigationController = UINavigationController(rootViewController: BookViewController())
+        view.window?.rootViewController = navigationController
+        view.window?.makeKeyAndVisible()
     }
     
-    public func animateOut() async {
+    func animateOut() async {
         await withCheckedContinuation { continuation in
             UIView.animate(
                 withDuration: 1.0,
