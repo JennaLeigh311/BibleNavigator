@@ -18,13 +18,15 @@ class ChapterViewController: BaseCollectionViewController {
     override func didSelect(item: String) {
         
         let verseViewController = VerseViewController()
-        guard case verseViewController.verses = chapters[Int(item) ?? 0] else {
+        guard let verses = chapters[Int(item) ?? 0] else  {
             print("No verses found for chapter \(item)")
+            print("chapters \(chapters)")
             return
         }
         
         verseViewController.book = book
         verseViewController.chapter = Int(item) ?? 0
+        verseViewController.verses = verses
         
         navigationController?.pushViewController(
             verseViewController,
