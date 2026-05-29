@@ -32,23 +32,25 @@ class BookView: UICollectionView {
         let currentButton = setupBookButton()
         self.addSubview(currentButton)
         currentButton.addTarget(self, action: #selector(buttonHandler), for: .touchUpInside)
-    }
-    
-    func setupBookButton() -> UIButton {
-        let bookButton = UIButton()
-        bookButton.setTitle("Genesis", for: .normal)
-        bookButton.setTitleColor(.black, for: .normal)
         
         // TODO: do all of this in a separate method called "positionButton"
         // disable Apple's automatic constraints so I can add my own AutoLayout constraints
-        bookButton.translatesAutoresizingMaskIntoConstraints = false
+        currentButton.translatesAutoresizingMaskIntoConstraints = false
         
         // apply constraints to center it relative to the parent view
         NSLayoutConstraint.activate([
-            bookButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            bookButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            currentButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            currentButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
         ])
+    }
+    
+    func setupBookButton() -> UIButton {
+        let bookButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        
+        bookButton.setTitle("Genesis", for: .normal)
+        bookButton.backgroundColor = .white
+        bookButton.setTitleColor(.black, for: .normal)
         
         return bookButton
     }
