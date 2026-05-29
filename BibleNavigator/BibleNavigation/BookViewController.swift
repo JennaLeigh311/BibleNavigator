@@ -9,55 +9,58 @@ import UIKit
 
 class BookViewController: UIViewController {
     
-    let bookView = BookView(
-        frame: .zero,
-        collectionViewLayout: UICollectionViewFlowLayout()
-    )
+    var collectionView: UICollectionView!
+    
+    let books = ["Genesis", "Exodus", "Leviticus"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bookView.callback = chooseBook
         
-        view.addSubview(bookView)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        
+        view.addSubview(collectionView)
         
         // setupCustomViewConstrains()
-        
-        Task {
-            await animateIn()
-        }
         
         setupCustomViewConstrains()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+    }
+    
     func setupCustomViewConstrains() {
-        bookView.translatesAutoresizingMaskIntoConstraints = false
-        // Making the customView to take all screen space
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        // Making the collectionView take all screen space
         NSLayoutConstraint.activate([
-            bookView.topAnchor.constraint(equalTo: view.topAnchor),
-            bookView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            bookView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bookView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
-    // Source - https://codemia.io/knowledge-hub/path/make_a_simple_fade_in_animation_in_swift
-    func animateIn() async {
-        await withCheckedContinuation { continuation in
-            self.bookView.alpha = 0.0
-            UIView.animate(
-                withDuration: 0.7,
-                animations: {
-                    self.bookView.alpha = 1.0
-                },
-                completion: { _ in
-                    continuation.resume()
-                }
-            )
-        }
-    }
+    
     
     @objc func chooseBook() {
         self.navigationController?.pushViewController(ChapterViewController(), animated: true)
     }
     
+}
+
+// Source - https://medium.com/@coolanil.saini/ios-uicollectionview-a-complete-guide-3152746763cc
+extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.books.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = .blue
+        return cell
+    }
 }

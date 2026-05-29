@@ -10,15 +10,16 @@ import UIKit
 // Source on how to connect my button to a target action inside the view controller
 // https://dev.to/msa_128/how-can-a-viewcontroller-communicate-an-action-to-a-button-in-a-view-j1
 
-// TODO: make this a UICOllectionViewController?
 class BookView: UICollectionView {
+    
+    
     
     // We define the callback method we want to use in our button
     var callback: (() -> Void)?
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
-        
+        self.backgroundColor = .systemBackground
         
         renderBooks()
     }
@@ -29,7 +30,7 @@ class BookView: UICollectionView {
     
     func renderBooks() {
         // for each book
-        let currentButton = setupBookButton()
+        let currentButton = setupBookButton(title: "Genesis")
         self.addSubview(currentButton)
         currentButton.addTarget(self, action: #selector(buttonHandler), for: .touchUpInside)
         
@@ -45,12 +46,12 @@ class BookView: UICollectionView {
         ])
     }
     
-    func setupBookButton() -> UIButton {
+    func setupBookButton(title: String) -> UIButton {
         let bookButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         
-        bookButton.setTitle("Genesis", for: .normal)
-        bookButton.backgroundColor = .white
-        bookButton.setTitleColor(.black, for: .normal)
+        bookButton.setTitle(title, for: .normal)
+        bookButton.backgroundColor = .systemFill
+        bookButton.setTitleColor(.label, for: .normal)
         
         return bookButton
     }
