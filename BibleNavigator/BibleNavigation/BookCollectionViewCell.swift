@@ -10,7 +10,7 @@ import UIKit
 // Source on how to connect my button to a target action inside the view controller
 // https://dev.to/msa_128/how-can-a-viewcontroller-communicate-an-action-to-a-button-in-a-view-j1
 
-class BookCollectionViewCell: UICollectionViewCell {
+class BaseCollectionViewCell: UICollectionViewCell {
     let label = UILabel()
     let bookName: String = ""
     let bookNumber: Int = 0
