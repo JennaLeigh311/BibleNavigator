@@ -8,14 +8,19 @@
 import UIKit
 
 class VerseViewController: BaseCollectionViewController {
-    var verses: Verses? = nil
-    var chapter: Chapter? = nil
+    var verses: Int = 0
+    var chapter: Int = 0
     var book: Book? = nil
     
     override var data: [String] {
+        if verses == 0 {
+            print("No verses for chapter \(String(chapter)) of book \(book?.title ?? "Unknown")")
+            return []
+        }
+
         // construct the data with a for loop
         var array: [String] = []
-        for verse in 1...(verses?.count ?? 1) {
+        for verse in 1...verses {
             array.append(String(verse))
         }
         return array

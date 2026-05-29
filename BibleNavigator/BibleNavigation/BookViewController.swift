@@ -36,17 +36,18 @@ class BookViewController: BaseCollectionViewController {
     
     override func didSelect(item: String) {
         
-        let chapterViewController = ChapterViewController()
-        for book in books {
-            if book.title == item {
-                chapterViewController.chapters = book.chapters
-                chapterViewController.book = book
-            }
+        guard let book = bibleService.booksByTitle[item] else {
+            print("No book found for \(item)")
+            return
         }
+        
+        let chapterViewController = ChapterViewController()
+        chapterViewController.chapters = book.chapters
+        chapterViewController.book = book
+
         navigationController?.pushViewController(
             chapterViewController,
             animated: true
         )
-        
     }
 }

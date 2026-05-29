@@ -5,8 +5,8 @@
 //  Created by Jenna Bunescu on 5/28/26.
 //
 
-struct Book: Identifiable {
-    var id: Int
-    var title: String
-    var chapters: [Chapter]
+struct Book: Codable {
+    let id: Int
+    let title: String
+    let chapters: [Int: Int]
 }

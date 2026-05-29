@@ -10,6 +10,8 @@ import Foundation
 class BibleDataService {
     var books: [Book] = []
     
+    var booksByTitle: [String: Book] = [:]
+    
     init() {
         // call all the functions here
     }
