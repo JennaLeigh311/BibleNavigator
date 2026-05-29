@@ -15,7 +15,7 @@ class BibleDataService {
     }
     
     // Source - https://medium.com/@garejakirit/how-to-call-apis-in-ios-using-swift-uikit-and-swiftui-220357d263bb
-    func fetchData() {
+    func fetchData() async {
         guard let url = URL(string: "https://ot-s3-tom-hamming.s3.amazonaws.com/BibleJson.json") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {

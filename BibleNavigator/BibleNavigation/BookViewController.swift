@@ -12,13 +12,16 @@ class BookViewController: BaseCollectionViewController {
     var bibleService = BibleDataService()
     var books: [Book] = []
 
-    init() {
-        self.books = bibleService.books
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        Task {
+            await bibleService.fetchData()
+
+            self.books = bibleService.books
+
+            self.collectionView.reloadData() // recreate the cells based on new data
+        }
     }
     
     override var data: [String] {
