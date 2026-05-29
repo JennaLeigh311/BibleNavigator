@@ -19,13 +19,9 @@ class BookViewController: UIViewController {
         
         view.backgroundColor = .blue
         
-        do {
-            try chooseChapter()
-            print("Success!")
-        } catch {
-            print("Failed: \(error.localizedDescription)")
-        }
+        // render books here with renderBooks(), which uses an array of the books that were given to us, and calls setupBookButton() for each of them
         
+        setupBookButton()
     }
     
     // Source - https://codemia.io/knowledge-hub/path/make_a_simple_fade_in_animation_in_swift
@@ -44,12 +40,28 @@ class BookViewController: UIViewController {
         }
     }
     
-    func chooseChapter() throws {
-        guard let navigationViewController = view.window?.rootViewController as? UINavigationController else {
-            throw NSError(domain: "AppError", code: 1, userInfo: [NSLocalizedDescriptionKey: "No navigation controller found"])
-        }
+    func setupBookButton() {
+        let bookButton = UIButton()
+        bookButton.setTitle("Genesis", for: .normal)
+        bookButton.setTitleColor(.black, for: .normal)
+        bookButton.addTarget(self, action: #selector(chooseBook), for: .touchDown)
         
-        navigationViewController.pushViewController(ChapterViewController(), animated: true)
+        
+        view.addSubview(bookButton)
+        
+        // disable Apple's automatic constraints so I can add my own AutoLayout constraints
+        bookButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // apply constraints to center it relative to the parent view
+        NSLayoutConstraint.activate([
+            bookButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            bookButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            
+        ])
+    }
+    
+    @objc func chooseBook() {
+        self.navigationController?.pushViewController(ChapterViewController(), animated: true)
         
     }
 }
