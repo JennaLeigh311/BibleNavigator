@@ -17,12 +17,24 @@ class BookViewController: UIViewController {
         super.viewDidLoad()
         
         let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(
+            top: 20,
+            left: 20,
+            bottom: 20,
+            right: 20
+        )
+
+        layout.minimumLineSpacing = 16
+        layout.minimumInteritemSpacing = 12
+        layout.itemSize = CGSize(width: 100, height: 200)
         layout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView.delegate = self // tell the collection view where the data is coming from
+        collectionView.dataSource = self
         
         view.addSubview(collectionView)
         
-        // setupCustomViewConstrains()
+        renderBooks()
         
         setupCustomViewConstrains()
     }
@@ -43,7 +55,13 @@ class BookViewController: UIViewController {
         ])
     }
     
-    
+    func renderBooks() {
+        // for each book
+        collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: "customCell")
+//        self.addSubview(currentButton)
+//        currentButton.addTarget(self, action: #selector(buttonHandler), for: .touchUpInside)
+//
+    }
     
     @objc func chooseBook() {
         self.navigationController?.pushViewController(ChapterViewController(), animated: true)
@@ -59,8 +77,21 @@ extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .blue
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! BookCollectionViewCell
+        cell.label.text = books[indexPath.item]
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+
+        let selectedBook = books[indexPath.item]
+
+        print("Tapped \(selectedBook)")
+
+        navigationController?.pushViewController(
+            ChapterViewController(),
+            animated: true
+        )
     }
 }
