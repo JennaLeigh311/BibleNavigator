@@ -7,36 +7,32 @@
 
 import UIKit
 
-class ChapterViewController: UIViewController {
-    var chapter: Int? = nil
-    var verses: Int? = nil
-    let book: Book? = nil
+class ChapterViewController: BaseCollectionViewController {
+    var chapters: [Chapter] = []
+    var book: Book? = nil
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        Task {
-            await animateIn()
+    override var data: [String] {
+        // construct the data with a for loop
+        var array: [String] = []
+        for chapter in chapters {
+            array.append(String(chapter.id))
         }
-        
-        view.backgroundColor = .green
-        
+        return array
     }
     
-    // Source - https://codemia.io/knowledge-hub/path/make_a_simple_fade_in_animation_in_swift
-    func animateIn() async {
-        await withCheckedContinuation { continuation in
-            self.view.alpha = 0.0
-            UIView.animate(
-                withDuration: 0.7,
-                animations: {
-                    self.view.alpha = 1.0
-                },
-                completion: { _ in
-                    continuation.resume()
-                }
-            )
+    override func didSelect(item: String) {
+        
+        let verseViewController = VerseViewController()
+        for chapter in chapters {
+            if String(chapter.id) == item {
+                verseViewController.verses = chapter.verses
+                verseViewController.chapter = chapter
+                verseViewController.book = book
+            }
         }
+        navigationController?.pushViewController(
+            verseViewController,
+            animated: true
+        )
     }
 }

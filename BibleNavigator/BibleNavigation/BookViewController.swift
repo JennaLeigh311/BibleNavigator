@@ -10,7 +10,7 @@ import UIKit
 class BookViewController: BaseCollectionViewController {
     
     var bibleService = BibleDataService()
-    var books: [Book] = [] // this should simply assing as the bibleService.books
+    var books: [Book] = []
 
     init() {
         self.books = bibleService.books
@@ -36,9 +36,8 @@ class BookViewController: BaseCollectionViewController {
         let chapterViewController = ChapterViewController()
         for book in books {
             if book.title == item {
-                chapterViewController.chapter = book.contents.chapter
-                chapterViewController.verses = book.contents.verses
-                
+                chapterViewController.chapters = book.chapters
+                chapterViewController.book = book
             }
         }
         navigationController?.pushViewController(

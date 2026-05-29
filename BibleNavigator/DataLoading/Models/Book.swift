@@ -8,5 +8,5 @@
 struct Book: Identifiable {
     var id: Int
     var title: String
-    var contents: ChapterVerses
+    var chapters: [Chapter]
 }
