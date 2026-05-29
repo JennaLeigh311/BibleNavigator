@@ -9,9 +9,15 @@ import UIKit
 
 class BookViewController: UIViewController {
     
+    let bookView = BookView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        bookView.callback = chooseBook
         
+        view.addSubview(bookView)
+        
+        // setupCustomViewConstrains()
         
         Task {
             await animateIn()
@@ -19,9 +25,7 @@ class BookViewController: UIViewController {
         
         view.backgroundColor = .blue
         
-        // render books here with renderBooks(), which uses an array of the books that were given to us, and calls setupBookButton() for each of them
         
-        setupBookButton()
     }
     
     // Source - https://codemia.io/knowledge-hub/path/make_a_simple_fade_in_animation_in_swift
@@ -40,28 +44,8 @@ class BookViewController: UIViewController {
         }
     }
     
-    func setupBookButton() {
-        let bookButton = UIButton()
-        bookButton.setTitle("Genesis", for: .normal)
-        bookButton.setTitleColor(.black, for: .normal)
-        bookButton.addTarget(self, action: #selector(chooseBook), for: .touchDown)
-        
-        
-        view.addSubview(bookButton)
-        
-        // disable Apple's automatic constraints so I can add my own AutoLayout constraints
-        bookButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        // apply constraints to center it relative to the parent view
-        NSLayoutConstraint.activate([
-            bookButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            bookButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            
-        ])
-    }
-    
     @objc func chooseBook() {
         self.navigationController?.pushViewController(ChapterViewController(), animated: true)
-        
     }
+    
 }

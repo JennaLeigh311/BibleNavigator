@@ -10,7 +10,6 @@ import UIKit
 // Source - https://www.delasign.com/blog/uiview-swift-recommendations/
 
 class WelcomeView: UIView {
-    static let identifier: String = "[CustomUIView]"
     let gradientLayer = CAGradientLayer()
     
     override init(frame: CGRect) {
