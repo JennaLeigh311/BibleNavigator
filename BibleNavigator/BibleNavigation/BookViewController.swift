@@ -8,10 +8,14 @@
 import UIKit
 
 class BookViewController: BaseCollectionViewController {
+    override var data: [String] {
+        return ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy"]
+    }
+    
     override func didSelect(item: String) {
         
         navigationController?.pushViewController(
-            ChapterViewController(chapterVerse: item),
+            ChapterViewController(),
             animated: true
         )
     }

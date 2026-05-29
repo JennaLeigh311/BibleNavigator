@@ -12,10 +12,6 @@ import UIKit
 
 class BaseCollectionViewCell: UICollectionViewCell {
     let label = UILabel()
-    let bookName: String = ""
-    let bookNumber: Int = 0
-    let chapters: Int = 0
-    let verses: Int = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)

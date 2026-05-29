@@ -9,6 +9,8 @@ import UIKit
 
 class ChapterViewController: UIViewController {
     
+    let book: Book? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

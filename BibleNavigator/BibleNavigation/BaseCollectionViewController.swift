@@ -11,7 +11,9 @@ class BaseCollectionViewController: UIViewController {
     
     var collectionView: UICollectionView!
     
-    var data: [String] = []
+    var data: [String] {
+        return []
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,14 +34,14 @@ class BaseCollectionViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(
             top: 20,
-            left: 20,
+            left: 35,
             bottom: 20,
-            right: 20
+            right: 35
         )
 
         layout.minimumLineSpacing = 16
-        layout.minimumInteritemSpacing = 12
-        layout.itemSize = CGSize(width: 100, height: 200)
+        layout.minimumInteritemSpacing = 4
+        layout.itemSize = CGSize(width: 150, height: 230)
         layout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.delegate = self // tell the collection view where the data is coming from
