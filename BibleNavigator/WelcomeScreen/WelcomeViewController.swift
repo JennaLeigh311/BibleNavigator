@@ -16,24 +16,18 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // call the loading of the API data here
-        
-    
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             Task {
                 await self.switchToMainApp()
             }
         }
     }
-    
-    func loadData() {
-        
-    }
 
     func switchToMainApp() async {
         await animateOut()
         
         // TODO: disable navigation bar
+
         let navigationController = UINavigationController(rootViewController: BookViewController())
         view.window?.rootViewController = navigationController
     }

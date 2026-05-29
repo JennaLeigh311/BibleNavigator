@@ -8,7 +8,8 @@
 import UIKit
 
 class ChapterViewController: UIViewController {
-    
+    var chapter: Int? = nil
+    var verses: Int? = nil
     let book: Book? = nil
     
     override func viewDidLoad() {
