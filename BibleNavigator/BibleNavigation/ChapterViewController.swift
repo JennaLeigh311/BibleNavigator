@@ -12,7 +12,10 @@ class ChapterViewController: BaseCollectionViewController {
     var book: Book? = nil
     
     override var data: [String] {
-        return chapters.keys.map { String($0) }
+        return chapters
+            .keys
+            .sorted()
+            .map { String($0) }
     }
     
     override func didSelect(item: String) {

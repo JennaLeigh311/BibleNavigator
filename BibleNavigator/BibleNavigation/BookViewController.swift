@@ -56,25 +56,25 @@ class BookViewController: BaseCollectionViewController {
         )
     }
     
+    // Source - https://www.hackingwithswift.com/example-code/uikit/how-to-use-uiactivityindicatorview-to-show-a-spinner-when-work-is-happening
+    //
     func showLoadingScreen() {
         let spinner = UIActivityIndicatorView(style: .large)
         view.backgroundColor = .systemBackground
-
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.startAnimating()
-        spinner.hidesWhenStopped = true // Automatically disappears when stopped
         view.addSubview(spinner)
         
+        // whenever isLoading changes, run this closure:
         bibleService.$isLoading
-            .receive(on: RunLoop.main) // Ensure UI updates happen on the main thread
-            .sink { [weak self] loading in
+            .receive(on: RunLoop.main) // Ensure UI updates happen on the main thread because UIKit can only safely update UI on the mian thread
+            .sink { loading in // .sink means "subscribe to this publisher, and loading is the newest value of isLoading
                 if loading {
                     spinner.startAnimating()
                 } else {
                     spinner.stopAnimating()
                 }
             }
-            .store(in: &cancellables)
+            .store(in: &cancellables) // store object of type AnyCancellables here because if no one keeps a reference to it, it gets destroyed. Now the subscription stays alive as long as this view controller is alive.
 
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
