@@ -31,18 +31,14 @@ class BaseCollectionViewController: UIViewController {
     }
     
     func setupCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(
-            top: 20,
-            left: 35,
-            bottom: 20,
-            right: 35
+        let config = UICollectionLayoutListConfiguration(
+            appearance: .insetGrouped
         )
 
-        layout.minimumLineSpacing = 16
-        layout.minimumInteritemSpacing = 4
-        layout.itemSize = CGSize(width: 150, height: 230)
-        layout.scrollDirection = .vertical
+        let layout = UICollectionViewCompositionalLayout.list(
+            using: config
+        )
+
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.delegate = self // tell the collection view where the data is coming from
         collectionView.dataSource = self

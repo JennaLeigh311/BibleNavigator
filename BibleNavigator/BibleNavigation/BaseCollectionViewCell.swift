@@ -25,9 +25,7 @@ class BaseCollectionViewCell: UICollectionViewCell {
     
     func setupCellStyling() {
         contentView.backgroundColor = .systemFill
-        contentView.layer.cornerRadius = 12
         contentView.clipsToBounds = true
-        contentView.layer.borderWidth = 1
     }
     
     func setupLabel() {
