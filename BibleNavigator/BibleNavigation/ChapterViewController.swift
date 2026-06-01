@@ -21,7 +21,7 @@ class ChapterViewController: BaseCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Chapters"
+        self.title = "\(book?.title ?? "") Chapters"
     }
     
     override func didSelect(item: String) {

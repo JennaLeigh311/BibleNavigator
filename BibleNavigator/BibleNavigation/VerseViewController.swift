@@ -29,23 +29,21 @@ class VerseViewController: BaseCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Verses"
+        self.title = "\(book?.title ?? ""), Chapter \(chapter) Verses"
     }
     
     override func didSelect(item: String) {
-        // reference to olive tree bible TODO
         
-        // Source - https://stackoverflow.com/a/33932755
-        // Posted by Orkhan Alizade, modified by community. See post 'Timeline' for change history
-        // Retrieved 2026-05-29, License - CC BY-SA 4.0
-        let oliveTreeHooks = "olivetree://bible/\(book?.id ?? 0)/\(chapter)/\(item)"
-        let oliveTreeUrl = URL(string: oliveTreeHooks)!
-        if UIApplication.shared.canOpenURL(oliveTreeUrl)
-        {
-            UIApplication.shared.open(oliveTreeUrl)
+        // Source - https://stackoverflow.com/a/54296065
+        // Posted by Mohammad Mirzakhani, modified by community. See post 'Timeline' for change history
+        // Retrieved 2026-06-01, License - CC BY-SA 4.0
+        let oliveTreeUrl = "olivetree://bible/\(book?.id ?? 0).\(chapter).\(item)"
+        if let url = URL(string: "\(oliveTreeUrl)"), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
             //redirect to safari because the user doesn't have the app
-            UIApplication.shared.open(URL(string: "http://instagram.com/")!)
+            let appStoreURL = URL(string: "https://www.olivetree.com/blog/apps/ios/")!
+            UIApplication.shared.open(appStoreURL)
         }
 
     }
