@@ -28,13 +28,14 @@ class BaseCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 12
         contentView.clipsToBounds = true
         contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.systemGray4.cgColor
     }
     
     func setupLabel() {
-        label.frame = contentView.bounds
         label.textAlignment = .center
         label.textColor = .label
+        label.font = .preferredFont(forTextStyle: .body)
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
         contentView.addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -43,8 +44,8 @@ class BaseCollectionViewCell: UICollectionViewCell {
             label.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            label.leadingAnchor.constraint(greaterThanOrEqualTo: self.leadingAnchor, constant: 20),
-            label.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -20)
+            label.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -20)
         ])
     }
     
