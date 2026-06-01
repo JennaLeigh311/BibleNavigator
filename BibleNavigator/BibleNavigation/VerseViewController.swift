@@ -26,6 +26,12 @@ class VerseViewController: BaseCollectionViewController {
         return array
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = "Verses"
+    }
+    
     override func didSelect(item: String) {
         // reference to olive tree bible TODO
         

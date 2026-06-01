@@ -18,6 +18,12 @@ class ChapterViewController: BaseCollectionViewController {
             .map { String($0) }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = "Chapters"
+    }
+    
     override func didSelect(item: String) {
         
         let verseViewController = VerseViewController()
