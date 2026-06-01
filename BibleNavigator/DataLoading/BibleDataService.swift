@@ -24,7 +24,7 @@ class BibleDataService: ObservableObject {
         } catch {
             print("Fetch or parsing error: \(error)")
         }
-//        isLoading = false
+        isLoading = false
     }
     
     func parseData(data: Data) throws {

@@ -23,7 +23,6 @@ class ChapterViewController: BaseCollectionViewController {
         let verseViewController = VerseViewController()
         guard let verses = chapters[Int(item) ?? 0] else  {
             print("No verses found for chapter \(item)")
-            print("chapters \(chapters)")
             return
         }
         

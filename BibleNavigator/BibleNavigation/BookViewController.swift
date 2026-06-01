@@ -22,8 +22,6 @@ class BookViewController: BaseCollectionViewController {
             await bibleService.fetchData()
             
             self.books = bibleService.books
-            
-            print("books: \(books)")
 
             self.collectionView.reloadData() // recreate the cells based on new data
         }
