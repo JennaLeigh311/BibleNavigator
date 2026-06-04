@@ -58,7 +58,7 @@ class BaseCollectionViewController: UIViewController {
     }
     
     func renderData() {
-        collectionView.register(BaseCollectionViewCell.self, forCellWithReuseIdentifier: "customCell")
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
     }
     
     func didSelect(item: String) {
@@ -75,8 +75,14 @@ extension BaseCollectionViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! BaseCollectionViewCell
-        cell.label.text = data[indexPath.item]
+        
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        var content = UIListContentConfiguration.cell()
+        content.text = data[indexPath.item]
+
+        cell.contentConfiguration = content
+        
         return cell
     }
     
