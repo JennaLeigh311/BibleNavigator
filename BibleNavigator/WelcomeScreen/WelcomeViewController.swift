@@ -8,14 +8,14 @@
 import UIKit
 
 class WelcomeViewController: UIViewController {
-    
+
     override func loadView() {
         view = WelcomeView()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             Task {
                 await self.switchToMainApp()
@@ -26,10 +26,12 @@ class WelcomeViewController: UIViewController {
     func switchToMainApp() async {
         await animateOut()
 
-        let navigationController = UINavigationController(rootViewController: BookViewController())
+        let navigationController = UINavigationController(
+            rootViewController: BookViewController()
+        )
         view.window?.rootViewController = navigationController
     }
-    
+
     func animateOut() async {
         await withCheckedContinuation { continuation in
             UIView.animate(
@@ -46,4 +48,3 @@ class WelcomeViewController: UIViewController {
     }
 
 }
-

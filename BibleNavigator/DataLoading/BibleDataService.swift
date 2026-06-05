@@ -5,19 +5,24 @@
 //  Created by Jenna Bunescu on 5/28/26.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class BibleDataService: ObservableObject {
     @Published var isLoading: Bool = true
     var books: [Book] = []
-    
+
     var booksByTitle: [String: Book] = [:]
-    
+
     // Source - https://medium.com/@garejakirit/how-to-call-apis-in-ios-using-swift-uikit-and-swiftui-220357d263bb
     func fetchData() async {
         // if the URL exists
-        guard let url = URL(string: "https://ot-s3-tom-hamming.s3.amazonaws.com/BibleJson.json") else { return }
+        guard
+            let url = URL(
+                string:
+                    "https://ot-s3-tom-hamming.s3.amazonaws.com/BibleJson.json"
+            )
+        else { return }
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             try parseData(data: data)
@@ -26,39 +31,46 @@ class BibleDataService: ObservableObject {
         }
         isLoading = false
     }
-    
+
     func parseData(data: Data) throws {
         do {
             let decoder = JSONDecoder()
-            
-            let rawResponse = try decoder.decode([String: RawBook].self, from: data)
-            
-            let convertedBooks: [Book] = rawResponse.compactMap { (key, rawBook) -> Book? in
-                guard let id = Int(key) else { return nil } // make sure first that the key is convertable to an integer to get the book ID
-                
+
+            let rawResponse = try decoder.decode(
+                [String: RawBook].self,
+                from: data
+            )
+
+            let convertedBooks: [Book] = rawResponse.compactMap {
+                (key, rawBook) -> Book? in
+                guard let id = Int(key) else { return nil }  // make sure first that the key is convertable to an integer to get the book ID
+
                 // get the chapters, which will need to be mapped too
-                let chapters = rawBook.chapters.compactMap { chapterKey, verseValue -> (Int, Int)? in
-                    guard let chapter = Int(chapterKey), // first make sure the chapters and verses are valid
-                          let verses = Int(verseValue) else {
+                let chapters = rawBook.chapters.compactMap {
+                    chapterKey,
+                    verseValue -> (Int, Int)? in
+                    guard let chapter = Int(chapterKey),  // first make sure the chapters and verses are valid
+                        let verses = Int(verseValue)
+                    else {
                         return nil
                     }
                     return (chapter, verses)
                 }
-                
+
                 // after extracting the chapter:verse pairs, we can build the Book from the rawBook (value)
                 return Book(
                     id: id,
                     title: rawBook.name,
                     chapters: Dictionary(uniqueKeysWithValues: chapters)
                 )
-            }.sorted { $0.id < $1.id } // sort the dictionary
-            
+            }.sorted { $0.id < $1.id }  // sort the dictionary
+
             self.books = convertedBooks
-            
+
             self.booksByTitle = Dictionary(
                 uniqueKeysWithValues: convertedBooks.map { ($0.title, $0) }
             )
-            
+
         } catch {
             print("Decoding error: \(error)")
             throw error

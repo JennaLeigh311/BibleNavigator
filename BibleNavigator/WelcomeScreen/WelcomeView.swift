@@ -11,29 +11,32 @@ import UIKit
 
 class WelcomeView: UIView {
     let gradientLayer = CAGradientLayer()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        setGradientBackground(colorTop: UIColor(
-            red: 0/255,
-            green: 18/255,
-            blue: 66/255,
-            alpha: 1.0
-        ), colorBottom: UIColor(
-            red: 0/255,
-            green: 148/255,
-            blue: 198/255,
-            alpha: 1.0
-        ))
-        
+        setGradientBackground(
+            colorTop: UIColor(
+                red: 0 / 255,
+                green: 18 / 255,
+                blue: 66 / 255,
+                alpha: 1.0
+            ),
+            colorBottom: UIColor(
+                red: 0 / 255,
+                green: 148 / 255,
+                blue: 198 / 255,
+                alpha: 1.0
+            )
+        )
+
         setupLabel()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("did not instanstiate coder")
     }
-    
+
     // Source - https://stackoverflow.com/a/50040529
     // Posted by gmoraleda
     // Retrieved 2026-05-28, License - CC BY-SA 3.0
@@ -45,21 +48,21 @@ class WelcomeView: UIView {
 
         self.layer.insertSublayer(gradientLayer, at: 0)
     }
-    
+
     // The gradient needs to be able to change orientation with the screen changing
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = self.bounds
     }
-    
+
     // Add welcome label
     func setupLabel() {
         let welcomeLabel = UILabel()
         welcomeLabel.text = "Welcome to Bible Navigator"
         welcomeLabel.textColor = .white
         welcomeLabel.textAlignment = .center
-        welcomeLabel.numberOfLines = 0 // this lets it take as many lines as needed when it needs to wrap
-        
+        welcomeLabel.numberOfLines = 0  // this lets it take as many lines as needed when it needs to wrap
+
         // New York font
         welcomeLabel.font = UIFontDescriptor.preferredFontDescriptor(
             withTextStyle: .title2
@@ -67,21 +70,27 @@ class WelcomeView: UIView {
             UIFont(descriptor: $0, size: 0)
         }
         welcomeLabel.adjustsFontForContentSizeCategory = true
-        
+
         self.addSubview(welcomeLabel)
-        
+
         // disable Apple's automatic constraints so I can add my own AutoLayout constraints
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+
         // apply constraints to center it relative to the parent view
         NSLayoutConstraint.activate([
             welcomeLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             welcomeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            
+
             // Prevent from bleeding out the screen
-            welcomeLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.leadingAnchor, constant: 20),
-            welcomeLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -20)
+            welcomeLabel.leadingAnchor.constraint(
+                greaterThanOrEqualTo: self.leadingAnchor,
+                constant: 20
+            ),
+            welcomeLabel.trailingAnchor.constraint(
+                lessThanOrEqualTo: self.trailingAnchor,
+                constant: -20
+            ),
         ])
     }
-    
+
 }
