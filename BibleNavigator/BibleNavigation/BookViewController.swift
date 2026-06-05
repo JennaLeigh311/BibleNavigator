@@ -26,7 +26,7 @@ class BookViewController: BaseCollectionViewController {
             
             self.books = bibleService.books
 
-            self.collectionView.reloadData() // recreate the cells based on new data
+            self.applySnapshot()
         }
     }
     
@@ -58,7 +58,6 @@ class BookViewController: BaseCollectionViewController {
     }
     
     // Source - https://www.hackingwithswift.com/example-code/uikit/how-to-use-uiactivityindicatorview-to-show-a-spinner-when-work-is-happening
-    //
     func showLoadingScreen() {
         let spinner = UIActivityIndicatorView(style: .large)
         view.backgroundColor = .systemBackground

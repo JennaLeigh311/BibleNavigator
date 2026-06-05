@@ -11,6 +11,9 @@ class BaseCollectionViewController: UIViewController {
     
     var collectionView: UICollectionView!
     
+    // int is the section identifier, and string is the item identifier
+    var dataSource: UICollectionViewDiffableDataSource<Int, String>!
+    
     var data: [String] {
         return []
     }
@@ -20,7 +23,7 @@ class BaseCollectionViewController: UIViewController {
         
         setupCollectionView()
         
-        renderData()
+        applySnapshot()
         
         setupCustomViewConstrains()
     }
@@ -40,10 +43,32 @@ class BaseCollectionViewController: UIViewController {
         )
 
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-        collectionView.delegate = self // tell the collection view where the data is coming from
-        collectionView.dataSource = self
+        collectionView.delegate = self
         
         view.addSubview(collectionView)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        
+        dataSource = UICollectionViewDiffableDataSource<Int, String>(
+            collectionView: collectionView
+        ) { collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+            var content = UIListContentConfiguration.cell()
+            content.text = item
+
+            cell.contentConfiguration = content
+            
+            return cell
+        }
+        
+    }
+    
+    func applySnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+
+        snapshot.appendSections([0])
+        snapshot.appendItems(data)
+
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
     
     func setupCustomViewConstrains() {
@@ -57,39 +82,18 @@ class BaseCollectionViewController: UIViewController {
         ])
     }
     
-    func renderData() {
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-    }
-    
     func didSelect(item: String) {
         // subclasses override
     }
     
 }
 
-// Source - https://medium.com/@coolanil.saini/ios-uicollectionview-a-complete-guide-3152746763cc
-extension BaseCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension BaseCollectionViewController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.data.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        var content = UIListContentConfiguration.cell()
-        content.text = data[indexPath.item]
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath)
+        else { return }
 
-        cell.contentConfiguration = content
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        didSelectItemAt indexPath: IndexPath) {
-        
-        self.didSelect(item: data[indexPath.item])
-        
+        didSelect(item: item)
     }
 }
